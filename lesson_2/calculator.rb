@@ -1,17 +1,17 @@
-# ask user for two numbers
-# ask whether they want to add, subtract, multiply or divide
-# perform operation on two numbers
-# display result
-
-# input = Kernel.gets.chomp
-# Kernel.puts (input)
-
 def prompt(message)
   puts "=> #{message}"
 end
 
-def valid_number?(num)
-  num.to_i != 0
+def number?(num)
+  integer?(num) || float?(num)
+end
+
+def float?(num)
+  /\d/.match(num) && /^-?\d*\.?\d*$/.match(num)
+end
+
+def integer?(num)
+  /^-?\d+$/.match(num)
 end
 
 def operation_to_message(op)
@@ -47,7 +47,7 @@ loop do # main loop
   loop do
     prompt "What's the first number?"
     number1 = gets.chomp
-    if valid_number?(number1)
+    if number?(number1)
       break
     else
       prompt "Hmm... that doesn't look like a valid number"
@@ -59,7 +59,7 @@ loop do # main loop
     prompt "What's the second number?"
     number2 = gets.chomp
 
-    if valid_number?(number2)
+    if number?(number2)
       break
     else
       prompt "Hmm... that doesn't look like a valid number"
@@ -91,7 +91,7 @@ loop do # main loop
 
   result = case operator
            when '1'
-             number1.to_i + number2.to_i
+            number1.to_i + number2.to_i
            when '2'
              number1.to_i - number2.to_i
            when '3'
