@@ -1,6 +1,12 @@
 require 'yaml'
 MESSAGES = YAML.load_file('messages.yml')
 
+def messages(message, lang='en')
+  lang = 'en' if lang == '1' || lang == 'english'
+  lang = 'jp' if lang == '2' || lang == 'japanese'
+  MESSAGES[lang][message]
+end
+
 def prompt(message)
   puts "=> #{message}"
 end
@@ -31,42 +37,45 @@ def operation_to_message(op)
   message
 end
 
-prompt(MESSAGES['welcome'])
+prompt(MESSAGES['language'])
+selected_lang = gets.chomp.downcase
+
+prompt(messages('welcome', selected_lang))
 
 name = ''
 loop do
   name = gets.chomp
 
   if name.empty?
-    prompt(MESSAGES['name_invalid'])
+    prompt(messages('name_invalid', selected_lang))
   else
     break
   end
 end
 
-prompt "Hi #{name}!"
+puts format(messages('greeting', selected_lang), name: name)
 
 loop do # main loop
   number1 = ''
   loop do
-    prompt(MESSAGES['first_num'])
+    prompt(messages('first_num', selected_lang))
     number1 = gets.chomp
     if number?(number1)
       break
     else
-      prompt(MESSAGES['num_invalid'])
+      prompt(messages('num_invalid', selected_lang))
     end
   end
 
   number2 = ''
   loop do
-    prompt(MESSAGES['second_num'])
+    prompt(messages('second_num', selected_lang))
     number2 = gets.chomp
 
     if number?(number2)
       break
     else
-      prompt(MESSAGES['num_invalid'])
+      prompt(messages('num_invalid', selected_lang))
     end
   end
 
@@ -78,7 +87,7 @@ loop do # main loop
    4) divide
   MSG
 
-  prompt(MESSAGES['operator'])
+  prompt(messages('operator', selected_lang))
 
   operator = ''
   loop do
@@ -87,7 +96,7 @@ loop do # main loop
     if %w(1 2 3 4).include?(operator)
       break
     else
-      prompt(MESSAGES['operator_invalid'])
+      prompt(messages('operator_invalid', selected_lang))
     end
   end
 
@@ -104,11 +113,11 @@ loop do # main loop
              number1.to_f / number2.to_f
            end
 
-  prompt("The result is #{result}")
+  puts format(messages('result', selected_lang), result: result)
 
-  prompt(MESSAGES['another_calc'])
+  prompt(messages('another_calc', selected_lang))
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
 
-prompt(MESSAGES['goodbye'])
+prompt(messages('goodbye', selected_lang))
