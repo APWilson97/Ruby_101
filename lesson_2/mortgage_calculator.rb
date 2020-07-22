@@ -1,13 +1,8 @@
-def get_loan_amount
-  loan = gets.chomp
-end
+require 'yaml'
+MESSAGES = YAML.load_file('mortgage_calculator_messages.yml')
 
-def get_loan_duration
-  duration = gets.chomp
-end
-
-def get_apr
-  initial_apr = gets.chomp
+def monthly_payment(loan, monthly_apr, monthly_duration)
+  loan.to_f * (monthly_apr / (1 - (1 + monthly_apr)**(-monthly_duration)))
 end
 
 def number?(num)
@@ -23,40 +18,62 @@ def float?(num)
 end
 
 def prompt(message)
-  puts "==> #{message}"
+  puts "=> #{message}"
 end
 
-prompt('welcome to the mortgage/car loan calculator!')
+prompt(MESSAGES['welcome'])
+prompt('-----------------')
 
 loop do # main loop
-  
+  loan_amount = ''
   loop do
-    prompt('Please enter the loan amount')
-    loan_amount = get_loan_amount
+    prompt(MESSAGES['loan_amount'])
+    loan_amount = gets.chomp
     if number?(loan_amount) && loan_amount.to_i > 0
       break
     else
-      prompt('Invalid input. Please enter a loan amount that is greater than 0')
-    end
-  end
-  
-  loop do
-    prompt('Please enter the number of years for the loan duration')
-    loan_duration = get_loan_duration
-    if integer?(loan_duration) && loan_duration.to_i > 0
-      break
-    else
-      prompt('Invalid input. Please enter the loan duration in years as single digits greater than 0')
+      prompt(MESSAGES['invalid_loan_amount'])
     end
   end
 
+  loan_years = ''
   loop do
-    prompt('Please enter the APR rate as single digits. For example: 2, 5, or 22. (You do not have to include the % sign)')
-    apr = get_apr
+    prompt(MESSAGES['loan_duration'])
+    loan_years = gets.chomp
+    if integer?(loan_years) && loan_years.to_i > 0
+      break
+    else
+      prompt(MESSAGES['invalid_loan_duration'])
+    end
+  end
+
+  apr = ''
+  loop do
+    prompt(MESSAGES['apr'])
+    apr = gets.chomp
     if number?(apr) && apr.to_i > 0
       break
     else
-      prompt('Invalid input. Please enter a valid number for the APR that is also greater than 0')
-    end  
+      prompt(MESSAGES['invalid_apr'])
+    end
   end
+
+  loan_months = loan_years.to_i * 12
+  monthly_interest = apr.to_f / 100 / 12
+
+  monthly = monthly_payment(loan_amount.to_f, monthly_interest, loan_months)
+
+  total_payment = monthly * loan_months
+
+  total_interest = total_payment - loan_amount.to_i
+
+  prompt("Your Monthly Payment is: $#{format('%.2f', monthly)}")
+  prompt("Your Total Payment is: $#{format('%.2f', total_payment)}")
+  prompt("Your Total Interest is: $#{format('%.2f', total_interest)}")
+
+  prompt(MESSAGES['calculate_again'])
+  answer = gets.chomp.downcase
+  break if answer == 'n'
 end
+prompt('Thank you for using the Mortgage Calculator!')
+prompt('Goodbye!')
