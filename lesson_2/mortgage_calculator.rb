@@ -51,6 +51,9 @@ loop do # main loop
   loop do
     prompt(MESSAGES['apr'])
     apr = gets.chomp
+    if apr.include?('%')
+      apr.delete!('%')
+    end
     if number?(apr) && apr.to_i > 0
       break
     else
@@ -61,13 +64,13 @@ loop do # main loop
   loan_months = loan_years.to_i * 12
   monthly_interest = apr.to_f / 100 / 12
 
-  monthly = monthly_payment(loan_amount.to_f, monthly_interest, loan_months)
+  result = monthly_payment(loan_amount.to_f, monthly_interest, loan_months)
 
-  total_payment = monthly * loan_months
+  total_payment = result * loan_months
 
   total_interest = total_payment - loan_amount.to_i
 
-  prompt("Your Monthly Payment is: $#{format('%.2f', monthly)}")
+  prompt("Your Monthly Payment is: $#{format('%.2f', result)}")
   prompt("Your Total Payment is: $#{format('%.2f', total_payment)}")
   prompt("Your Total Interest is: $#{format('%.2f', total_interest)}")
 

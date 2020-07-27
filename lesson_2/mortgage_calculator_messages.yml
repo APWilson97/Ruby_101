@@ -3,6 +3,6 @@
   invalid_loan_amount: "Invalid input. Please enter a loan amount greater than 0"
   loan_duration: "Please enter the number of years for the loan duration"
   invalid_loan_duration: "Invalid input. Please enter the loan duration in years as single digits greater than 0"
-  apr: "Please enter the APR rate as single digits. For example: 2, 5, or 22. (You do not have to include the % sign)"
+  apr: "Please enter the APR rate as a number greater than 0 (You do not have to include the % sign)"
   invalid_apr: "Invalid input. Please enter a valid number for the APR that is also greater than 0"
   calculate_again: "Would you like to calculate again? Press n to stop calculating"
