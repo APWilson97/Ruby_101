@@ -42,6 +42,9 @@ end
 loop do
   player_score = 0
   computer_score = 0
+
+  prompt("Welcome to the #{VALID_CHOICES.join(' ')} tournament!")
+  puts "\n"
   loop do
     choice = ''
     loop do
@@ -74,6 +77,8 @@ loop do
 
     display_score(player_score, computer_score)
 
+    prompt("-------------------")
+
     if player_score == 5
       prompt("Congratulations! You are the grand champion!")
       break
@@ -83,7 +88,7 @@ loop do
     end
   end
 
-  prompt("Do you want to play again?")
+  prompt("Do you want to play again? Press 'y' to play or press 'n' to exit")
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
