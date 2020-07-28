@@ -45,8 +45,10 @@ loop do
 
   prompt("Welcome to the #{VALID_CHOICES.join(' ')} tournament!")
   puts "\n"
+
   loop do
     choice = ''
+
     loop do
       prompt("Choose one: #{VALID_CHOICES.join(', ')}")
       prompt("You can also type them as: #{VALID_CHOICES_SHORT.join(', ')}")
