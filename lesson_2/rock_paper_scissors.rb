@@ -128,6 +128,7 @@ loop do
     elsif VALID_CHOICES_SHORT.include?(choice)
       computer_choice = VALID_CHOICES_SHORT.sample
     end
+    system("clear")
 
     display_choices(choice, computer_choice)
 
@@ -148,6 +149,7 @@ loop do
   prompt("Do you want to play again? Press 'y' to play or press 'n' to exit")
   answer = retrieve_play_again_answer
   break unless play_again?(answer) == 'y'
+  system("clear")
 end
 
 prompt("Thank you for playing. Goodbye!")
