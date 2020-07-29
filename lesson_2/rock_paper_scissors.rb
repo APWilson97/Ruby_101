@@ -2,11 +2,11 @@ VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 
 VALID_CHOICES_SHORT = ['r', 'p', 'sc', 'l', 'sp']
 
-CHOICES_CHANGE = { r: 'rock',
-                   p: 'paper',
-                   sc: 'scissors',
-                   l: 'lizard',
-                   sp: 'spock' }
+SHORT_HASH = { r: 'rock',
+               p: 'paper',
+               sc: 'scissors',
+               l: 'lizard',
+               sp: 'spock' }
 
 WINNING_MOVES = { rock: ['scissors', 'lizard'],
                   scissors: ['paper', 'lizard'],
@@ -47,7 +47,7 @@ end
 
 def display_choices(player, computer)
   if player.length < 3 && computer.length < 3
-    puts("You chose: #{CHOICES_CHANGE[player.to_sym]}; Computer chose: #{CHOICES_CHANGE[computer.to_sym]}")
+    puts("You chose: #{SHORT_HASH[player.to_sym]}; Computer chose: #{SHORT_HASH[computer.to_sym]}")
   else
     puts("You chose: #{player}; Computer chose: #{computer}")
   end
