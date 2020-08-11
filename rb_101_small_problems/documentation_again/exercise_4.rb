@@ -1,0 +1,1 @@
+element = a.bsearch { |x| x > 8 }
