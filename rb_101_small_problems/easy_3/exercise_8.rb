@@ -12,7 +12,7 @@
 
 def palindrome?(string)
   string_reversed = string.reverse
-  if string_reversed.match(string)
+  if string_reversed.match?(string)
     return true
   else
     return false
